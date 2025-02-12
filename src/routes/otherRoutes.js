@@ -6,6 +6,7 @@ import { Loadable } from "components";
 // render - landing page
 const Blog = Loadable( lazy( () => import("pages").then( IP => ( { default: IP.Blog } ) ) ) );
 const Checkout = Loadable( lazy( () => import("pages").then( IP => ( { default: IP.Checkout } ) ) ) );
+const LandingPage = Loadable( lazy( () => import("pages").then( IP => ( { default: IP.LandingPage } ) ) ) );
 
 export const otherRoutes = {
     path: "/",
@@ -20,7 +21,7 @@ export const otherRoutes = {
         },
         {
             index: true,
-            element: <Blog/>
+            element: <LandingPage/>
         },
     ]
 };

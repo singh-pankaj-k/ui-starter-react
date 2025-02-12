@@ -1,29 +1,9 @@
-import PropTypes from "prop-types";
 import React, { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-
-// material-ui
 import { styled } from "@mui/material/styles";
-import LinearProgress from "@mui/material/LinearProgress";
 
-// ==============================|| Loader ||============================== //
+import { Loader } from "components";
 
-const LoaderWrapper = styled( "div" )( ( { theme } ) => ( {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    zIndex: 2001,
-    width: "100%",
-    "& > * + *": {
-        marginTop: theme.spacing( 2 )
-    }
-} ) );
-
-const Loader = () => (
-    <LoaderWrapper>
-        <LinearProgress color="primary"/>
-    </LoaderWrapper>
-);
 
 const AppMainContainer = styled( "div" )( ( { theme } ) => ( {
     top: 0,
@@ -46,7 +26,4 @@ export const CommonLayout = () => {
     );
 };
 
-CommonLayout.propTypes = {
-    layout: PropTypes.string
-};
 
