@@ -1,8 +1,8 @@
 {
-  "name": "ltc-dashboard",
+  "name": "dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://onspark.ca/",
+  "homepage": "https://chatpta.ca/",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@chatpta/validate": "^3.0.26",
