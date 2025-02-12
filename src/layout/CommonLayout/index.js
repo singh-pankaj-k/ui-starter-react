@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
 // material-ui
@@ -9,37 +9,44 @@ import LinearProgress from "@mui/material/LinearProgress";
 // ==============================|| Loader ||============================== //
 
 const LoaderWrapper = styled( "div" )( ( { theme } ) => ( {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  zIndex: 2001,
-  width: "100%",
-  "& > * + *": {
-    marginTop: theme.spacing( 2 )
-  }
+    position: "fixed",
+    top: 0,
+    left: 0,
+    zIndex: 2001,
+    width: "100%",
+    "& > * + *": {
+        marginTop: theme.spacing( 2 )
+    }
 } ) );
 
 const Loader = () => (
-  <LoaderWrapper>
-    <LinearProgress color="primary" />
-  </LoaderWrapper>
+    <LoaderWrapper>
+        <LinearProgress color="primary"/>
+    </LoaderWrapper>
 );
+
+const AppMainContainer = styled( "div" )( ( { theme } ) => ( {
+    top: 0,
+    left: 0,
+    minHeight: "100vh",
+    width: "100%",
+    backgroundColor: theme.palette.background.default,
+} ) );
 
 // ==============================|| MINIMAL LAYOUT ||============================== //
 
-const CommonLayout = () => {
+export const CommonLayout = () => {
 
-  return (
-    <>
-      <Suspense fallback={ <Loader /> }>
-        <Outlet />
-      </Suspense>
-    </>
-  );
+    return (
+        <AppMainContainer>
+            <Suspense fallback={ <Loader/> }>
+                <Outlet/>
+            </Suspense>
+        </AppMainContainer>
+    );
 };
 
 CommonLayout.propTypes = {
-  layout: PropTypes.string
+    layout: PropTypes.string
 };
 
-export default CommonLayout;

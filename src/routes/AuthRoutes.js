@@ -1,74 +1,84 @@
-import { lazy } from 'react';
+import React, { lazy } from "react";
 
 // project import
-import Loadable from 'components/Loadable';
-import CommonLayout from 'layout/CommonLayout';
-import GuestUsersAllowed from 'utils/route-guard/GuestUsersAllowed';
-import AuthenticatedUserAllowed from "utils/route-guard/AuthenticatedUserAllowed";
+import { GuestUsersAllowed } from "AppStore";
+import { Loadable } from "components";
+// import { AuthenticatedUserAllowed } from "AppStore";
+import { CommonLayout } from "layout";
 
-// render - login
-const AuthLogin = Loadable(lazy(() => import('pages/auth/login')));
-const AuthRegister = Loadable(lazy(() => import('pages/auth/register')));
-const AuthForgotPassword = Loadable(lazy(() => import('pages/auth/forgot-password')));
-const AuthCheckMail = Loadable(lazy(() => import('pages/auth/check-mail')));
-const AuthChangePassword = Loadable(lazy(() => import('pages/auth/change-password')));
-const AuthChangePasswordSuccess = Loadable(lazy(() => import('pages/auth/change-password-success')));
-const AuthCodeVerification = Loadable(lazy(() => import('pages/auth/code-verification')));
+const SignIn = Loadable( lazy( () => import("pages").then( IP => ( { default: IP.SignIn } ) ) ) );
+const SignUp = Loadable( lazy( () => import("pages").then( IP => ( { default: IP.SignUp } ) ) ) );
+const SignInSide = Loadable( lazy( () => import("pages").then( IP => ( { default: IP.SignInSide } ) ) ) );
+const SignOut = Loadable( lazy( () => import("pages").then( IP => ( { default: IP.SignOut } ) ) ) );
 
-// ==============================|| AUTH ROUTING ||============================== //
 
-const AuthRoutes = {
-  path: '/',
-  children: [
-    {
-      path: '/',
-      element: (
-        <GuestUsersAllowed>
-          <CommonLayout />
-        </GuestUsersAllowed>
-      ),
-      children: [
+export const AuthRoutes = ( authPaths ) => ( {
+    path: authPaths.root,
+    children: [
         {
-          path: 'login',
-          element: <AuthLogin />
+            path: authPaths.root,
+            element: (
+                <GuestUsersAllowed>
+                    <CommonLayout/>
+                </GuestUsersAllowed>
+            ),
+            children: [
+                {
+                    path: authPaths.login,
+                    element: <SignIn/>
+                },
+                {
+                    path: authPaths.register,
+                    element: <SignUp/>
+                },
+                {
+                    path: "sign-in-side",
+                    element: <SignInSide/>
+                },
+                // {
+                //     path: authPaths.emailConfirmed,
+                //     element: <ConfirmActionPage actionConfirmed={ "emailConfirmed" }/>
+                // },
+                // {
+                //   path: "code-verification",
+                //   element: <AuthCodeVerification />
+                // }
+            ]
         },
+        // {
+        //     path: authPaths.auth.root,
+        //     element: (
+        //         <AuthenticatedUserAllowed>
+        //             <CommonLayout/>
+        //         </AuthenticatedUserAllowed>
+        //     ),
+        //     children: [
+        // {
+        //     path: authPaths.auth.children.changePassword,
+        //     element: <AuthChangePassword/>
+        // },
+        // {
+        //     path: authPaths.auth.children.changeEmail,
+        //     element: <ChangeEmailPage/>
+        // },
+        // {
+        //     path: authPaths.passwordResetConfirmed,
+        //     element: <ConfirmActionPage actionConfirmed={ "passwordReset" }/>
+        // },
+        // {
+        //     path: authPaths.auth.children.changePasswordSuccess,
+        //     element: <ConfirmActionPage actionConfirmed={ "passwordChanged" }/>
+        // },
+        // {
+        //     path: authPaths.emailConfirmed,
+        //     element: <ConfirmActionPage actionConfirmed={ "emailConfirmed" }/>
+        // },
+        // ]
+        // },
         {
-          path: 'register',
-          element: <AuthRegister />
-        },
-        {
-          path: 'forgot-password',
-          element: <AuthForgotPassword />
-        },
-        {
-          path: 'check-mail',
-          element: <AuthCheckMail />
-        },
-        {
-          path: 'code-verification',
-          element: <AuthCodeVerification />
+            path: authPaths.logout,
+            element: <SignOut/>
         }
-      ]
-    },
-    {
-      path: '/auth',
-      element: (
-        <AuthenticatedUserAllowed>
-          <CommonLayout />
-        </AuthenticatedUserAllowed>
-      ),
-      children: [
-        {
-          path: 'change-password',
-          element: <AuthChangePassword />
-        },
-        {
-          path: 'change-password-success',
-          element: <AuthChangePasswordSuccess />
-        }
-      ]
-    }
-  ]
-};
+    ]
+} );
 
-export default AuthRoutes;

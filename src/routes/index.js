@@ -1,27 +1,22 @@
-import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 
 // project import
-import Loadable from "components/Loadable";
-import AuthRoutes from "./AuthRoutes";
-import PublicRoutes from "./PublicRoutes";
-import ProtectedRoutes from "./ProtectedRoutes";
-import FallbackRoutes from "./FallbackRoutes";
+import { otherRoutes } from "./otherRoutes";
+import publicFallbackRoutes from "./publicFallbackRoutes";
+import { AuthRoutes } from "./AuthRoutes";
+import { dashboardRoutes } from "./dashboardRoutes";
+import { useAppPaths } from "../AppPaths";
 
-// render - landing page
-const PagesLanding = Loadable( lazy( () => import("pages/landing/LandingPage") ) );
 
 // ==============================|| ROUTING RENDER ||============================== //
 
 export default function ThemeRoutes() {
-  return useRoutes( [
-    {
-      path: "/",
-      element: <PagesLanding />
-    },
-    PublicRoutes,
-    ProtectedRoutes,
-    AuthRoutes,
-    FallbackRoutes
-  ] );
+    const { authPaths, dashboardPaths } = useAppPaths();
+
+    return useRoutes( [
+        AuthRoutes( authPaths ),
+        otherRoutes,
+        dashboardRoutes( dashboardPaths ),
+        publicFallbackRoutes
+    ] );
 }
